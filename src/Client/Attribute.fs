@@ -13,6 +13,7 @@ let init () =
     }
 
 type Msg =
+    | ModifyName of string
     | AddOneToValue
     | MinusOneToValue
 
@@ -22,6 +23,11 @@ let update
     =
 
     match msg with
+    | ModifyName newName ->
+        {
+            model with
+                Name = newName
+        }
     | AddOneToValue -> 
         { 
             model with 
@@ -43,18 +49,21 @@ let view
     Html.div [
         prop.className "flex items-center gap-4"
         prop.children [
-            Daisy.label model.Name
+            Daisy.input [
+                prop.value model.Name
+                prop.onTextChange (fun newString -> dispatch (ModifyName newString))
+            ]
 
             Html.text model.Value
 
             Daisy.button.button [
                 prop.text "+"
-                prop.onClick (fun e -> dispatch AddOneToValue)
+                prop.onClick (fun _ -> dispatch AddOneToValue)
             ]
 
             Daisy.button.button [
                 prop.text "-"
-                prop.onClick (fun (e: Browser.Types.MouseEvent) -> dispatch MinusOneToValue)
+                prop.onClick (fun _ -> dispatch MinusOneToValue)
             ]
         ]
     ]
