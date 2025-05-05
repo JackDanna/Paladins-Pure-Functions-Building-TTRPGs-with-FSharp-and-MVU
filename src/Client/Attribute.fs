@@ -26,7 +26,15 @@ let view (model: Attribute) (dispatch: Msg -> unit) =
 
             Html.text model.Value
 
-            Daisy.button.button [ prop.text "+"; prop.onClick (fun e -> dispatch AddOneToValue) ]
-            Daisy.button.button [ prop.text "+"; prop.onClick (fun e -> dispatch MinusOneToValue) ]
+            Daisy.button.button [
+                prop.text "+"
+                prop.onClick (fun e -> dispatch AddOneToValue)
+
+            ]
+            Daisy.button.button [
+                prop.text "-"
+                prop.onClick (fun e -> dispatch MinusOneToValue)
+
+            ]
         ]
     ]
