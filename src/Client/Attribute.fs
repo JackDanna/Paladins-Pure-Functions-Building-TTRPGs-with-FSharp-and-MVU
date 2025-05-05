@@ -2,18 +2,32 @@ module Attribute
 
 type Attribute = { Name: string; Value: int }
 
+let init () = 
+    { 
+        Name = "Strength"
+        Value = 0
+    }
+
 type Msg =
     | AddOneToValue
     | MinusOneToValue
 
-let init () = { Name = "Strength"; Value = 0 }
-
-let update (msg: Msg) (model: Attribute) =
+let update 
+    (msg: Msg)
+    (model: Attribute) 
+    =
 
     match msg with
-    | AddOneToValue -> { model with Value = model.Value + 1 }
-    | MinusOneToValue -> { model with Value = model.Value - 1 }
-
+    | AddOneToValue -> 
+        { 
+            model with 
+                Value = model.Value + 1 
+        }
+    | MinusOneToValue ->
+        {
+            model with 
+                Value = model.Value - 1
+        }
 
 open Feliz
 open Feliz.DaisyUI
@@ -29,12 +43,11 @@ let view (model: Attribute) (dispatch: Msg -> unit) =
             Daisy.button.button [
                 prop.text "+"
                 prop.onClick (fun e -> dispatch AddOneToValue)
-
             ]
+            
             Daisy.button.button [
                 prop.text "-"
-                prop.onClick (fun e -> dispatch MinusOneToValue)
-
+                prop.onClick (fun (e: Browser.Types.MouseEvent) -> dispatch MinusOneToValue)
             ]
         ]
     ]

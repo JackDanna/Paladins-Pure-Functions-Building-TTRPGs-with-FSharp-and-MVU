@@ -27,9 +27,9 @@
         "**/output": true,
         "**/deploy": true,
     },
-    "[fsharp]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "Ionide.Ionide-fsharp"
-    },
+    // "[fsharp]": {
+    //     "editor.formatOnSave": true,
+    //     "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+    // },
     
 }
