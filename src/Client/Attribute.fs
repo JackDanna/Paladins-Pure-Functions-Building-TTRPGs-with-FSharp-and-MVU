@@ -1,51 +1,25 @@
 module Attribute
 
-type Attribute = 
-    {
-        Name: string
-        Value: int
-    }
+type Attribute = { Name: string; Value: int }
 
-let init () = 
-    { 
-        Name = "Strength"
-        Value = 0
-    }
+let init () = { Name = "Strength"; Value = 0 }
 
 type Msg =
     | ModifyName of string
     | AddOneToValue
     | MinusOneToValue
 
-let update 
-    (msg: Msg)
-    (model: Attribute) 
-    =
+let update (msg: Msg) (model: Attribute) =
 
     match msg with
-    | ModifyName newName ->
-        {
-            model with
-                Name = newName
-        }
-    | AddOneToValue -> 
-        { 
-            model with 
-                Value = model.Value + 1 
-        }
-    | MinusOneToValue ->
-        {
-            model with 
-                Value = model.Value - 1
-        }
+    | ModifyName newName -> { model with Name = newName }
+    | AddOneToValue -> { model with Value = model.Value + 1 }
+    | MinusOneToValue -> { model with Value = model.Value - 1 }
 
 open Feliz
 open Feliz.DaisyUI
 
-let view 
-    (model: Attribute)
-    (dispatch: Msg -> unit)
-    =
+let view (model: Attribute) (dispatch: Msg -> unit) =
     Html.div [
         prop.className "flex items-center gap-4"
         prop.children [
@@ -56,14 +30,8 @@ let view
 
             Html.text model.Value
 
-            Daisy.button.button [
-                prop.text "+"
-                prop.onClick (fun _ -> dispatch AddOneToValue)
-            ]
+            Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
 
-            Daisy.button.button [
-                prop.text "-"
-                prop.onClick (fun _ -> dispatch MinusOneToValue)
-            ]
+            Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
         ]
     ]
