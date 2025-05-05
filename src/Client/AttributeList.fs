@@ -25,9 +25,10 @@ let update (msg: Msg) (model: AttributeList) =
 
 // View
 open Feliz
+open Feliz.DaisyUI
 
 let view (model: AttributeList) (dispatch: Msg -> unit) =
-    Html.div [
+    Daisy.card [
         prop.className "flex items-center gap-4"
         prop.children (
             model

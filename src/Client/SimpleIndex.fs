@@ -47,9 +47,7 @@ let view model dispatch =
                 prop.children [
                     Html.div [
                         prop.className "flex flex-col items-center justify-center h-full"
-                        prop.children [
-                            Html.div [ AttributeList.view model.AttributeList (AttributeListMsg >> dispatch) ]
-                        ]
+                        prop.children [ AttributeList.view model.AttributeList (AttributeListMsg >> dispatch) ]
                     ]
                 ]
             ]
