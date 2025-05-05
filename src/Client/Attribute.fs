@@ -31,18 +31,19 @@ open Feliz.DaisyUI
 
 let view (model: Attribute) (dispatch: Msg -> unit) =
     Html.div [
+        prop.className "flex items-center gap-4"
+        prop.children [
+            Daisy.label model.Name
 
-        Daisy.label model.Name
+            Html.text model.Value
 
-        Html.text model.Value
-
-        Daisy.button.button [
-            prop.text "+"
-            prop.onClick (fun e-> dispatch AddOneToValue )
+            Daisy.button.button [
+                prop.text "+"
+                prop.onClick (fun e-> dispatch AddOneToValue )
+            ]
+            Daisy.button.button [
+                prop.text "+"
+                prop.onClick (fun e-> dispatch MinusOneToValue )
+            ]
         ]
-        Daisy.button.button [
-            prop.text "+"
-            prop.onClick (fun e-> dispatch MinusOneToValue )
-        ]
-
     ]
