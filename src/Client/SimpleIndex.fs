@@ -10,20 +10,16 @@ type Model = { AttributeList: AttributeList }
 
 type Msg = AttributeListMsg of AttributeList.Msg
 
-let init () =
-    {
-        AttributeList = AttributeList.init [ "Strength"; "Reflex"; "Intelligence"; "Charisma;" ]
-    },
-    Cmd.none
+let init () = {
+    AttributeList = AttributeList.init [ "Strength"; "Reflex"; "Intelligence"; "Charisma;" ]
+}
 
 let update msg model =
     match msg with
-    | AttributeListMsg msg ->
-        {
-            model with
-                AttributeList = AttributeList.update msg model.AttributeList
-        },
-        Cmd.none
+    | AttributeListMsg msg -> {
+        model with
+            AttributeList = AttributeList.update msg model.AttributeList
+      }
 
 open Feliz
 
