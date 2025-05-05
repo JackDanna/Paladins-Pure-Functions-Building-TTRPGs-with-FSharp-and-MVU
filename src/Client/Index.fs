@@ -9,19 +9,17 @@ open Attribute
 type Model = {
     Todos: RemoteData<Todo list>
     Input: string
-    Attribute: Attribute
 }
 
 type Msg =
     | SetInput of string
     | LoadTodos of ApiCall<unit, Todo list>
     | SaveTodo of ApiCall<string, Todo list>
-    | AttributeMsg of Attribute.Msg
 
 let todosApi = Api.makeProxy<ITodosApi> ()
 
 let init () =
-    let initialModel = { Todos = NotStarted; Input = ""; Attribute = Attribute.init() }
+    let initialModel = { Todos = NotStarted; Input = "" }
     let initialCmd = LoadTodos(Start()) |> Cmd.ofMsg
 
     initialModel, initialCmd
@@ -34,7 +32,11 @@ let update msg model =
         | Start() ->
             let loadTodosCmd = Cmd.OfAsync.perform todosApi.getTodos () (Finished >> LoadTodos)
 
-            { model with Todos = model.Todos.StartLoading() }, loadTodosCmd
+            {
+                model with
+                    Todos = model.Todos.StartLoading()
+            },
+            loadTodosCmd
         | Finished todos -> { model with Todos = Loaded todos }, Cmd.none
     | SaveTodo msg ->
         match msg with
@@ -50,8 +52,6 @@ let update msg model =
                     Todos = RemoteData.Loaded todos
             },
             Cmd.none
-    | AttributeMsg msg -> 
-        { model with Attribute = Attribute.update msg model.Attribute }, Cmd.none
 
 open Feliz
 
@@ -91,7 +91,7 @@ module ViewComponents =
                         match model.Todos with
                         | NotStarted -> Html.text "Not Started."
                         | Loading None -> Html.text "Loading..."
-                        | Loading (Some todos)
+                        | Loading(Some todos)
                         | Loaded todos ->
                             for todo in todos do
                                 Html.li [
@@ -114,14 +114,13 @@ let view model dispatch =
                 prop.name "viewport"
                 prop.content "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
             ]
-            
+
             // Background div with image and glass effect
             Html.div [
-                prop.className "absolute inset-0 bg-cover bg-center bg-fixed bg-no-repeat
+                prop.className
+                    "absolute inset-0 bg-cover bg-center bg-fixed bg-no-repeat
                 bg-white/20 backdrop-blur-sm"
-                prop.style [
-                    style.backgroundImageUrl "https://unsplash.it/1200/900?random"
-                ]
+                prop.style [ style.backgroundImageUrl "https://unsplash.it/1200/900?random" ]
             ]
 
             // Content container (the rest of your UI)
@@ -131,10 +130,9 @@ let view model dispatch =
                     // Your existing content here
                     Html.a [
                         prop.href "https://safe-stack.github.io/"
-                        prop.className "absolute block ml-4 sm:ml-12 h-10 w-10 sm:h-12 sm:w-12 bg-teal-300 hover:cursor-pointer hover:bg-teal-400"
-                        prop.children [
-                            Html.img [ prop.src "/favicon.png"; prop.alt "Logo" ]
-                        ]
+                        prop.className
+                            "absolute block ml-4 sm:ml-12 h-10 w-10 sm:h-12 sm:w-12 bg-teal-300 hover:cursor-pointer hover:bg-teal-400"
+                        prop.children [ Html.img [ prop.src "/favicon.png"; prop.alt "Logo" ] ]
                     ]
 
 
@@ -142,9 +140,9 @@ let view model dispatch =
                         prop.className "flex flex-col items-center justify-center h-full"
                         prop.children [
                             Html.div [
-                                prop.className "bg-white/20 backdrop-blur-lg p-4 sm:p-8 rounded-xl shadow-lg border border-white/30 mx-4 sm:mx-0 max-w-full sm:max-w-2xl"
+                                prop.className
+                                    "bg-white/20 backdrop-blur-lg p-4 sm:p-8 rounded-xl shadow-lg border border-white/30 mx-4 sm:mx-0 max-w-full sm:max-w-2xl"
                                 prop.children [
-                                    Attribute.view model.Attribute (AttributeMsg >> dispatch)
                                     Html.h1 [
                                         prop.className "text-center text-3xl sm:text-5xl font-bold mb-3 p-2 sm:p-4"
                                         prop.text "Paladins_Pure_Functions_Building_TTRPGs_with_FSharp_and_MVU"

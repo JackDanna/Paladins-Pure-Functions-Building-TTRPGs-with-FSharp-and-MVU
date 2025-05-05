@@ -3,7 +3,7 @@ module Attribute
 // Model
 type Attribute = { Name: string; Value: int }
 
-let init () = { Name = "Strength"; Value = 0 }
+let init name = { Name = name; Value = 0 }
 
 // Update
 type Msg =
