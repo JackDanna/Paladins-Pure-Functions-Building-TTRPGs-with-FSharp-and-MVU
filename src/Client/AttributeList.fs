@@ -22,7 +22,6 @@ let update (msg: Msg) (model: AttributeList) =
             else
                 attribute)
 
-
 // View
 open Feliz
 open Feliz.DaisyUI

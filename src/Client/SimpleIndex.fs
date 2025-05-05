@@ -43,7 +43,7 @@ let view model dispatch =
 
             // Content container (the rest of your UI)
             Html.div [
-                prop.className "relative z-10 h-full w-full"
+                prop.className "h-full w-full"
                 prop.children [
                     Html.div [
                         prop.className "flex flex-col items-center justify-center h-full"
