@@ -24,7 +24,7 @@ open Feliz.DaisyUI
 
 let view (model: Attribute) (dispatch: Msg -> unit) =
     Html.div [
-        prop.className "flex items-center gap-4"
+        prop.className "flex items-center gap-4 border-2"
         prop.children [
             Daisy.input [
                 prop.value model.Name
