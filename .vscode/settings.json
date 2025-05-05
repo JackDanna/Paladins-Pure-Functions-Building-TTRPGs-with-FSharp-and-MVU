@@ -27,6 +27,7 @@
         "**/output": true,
         "**/deploy": true,
     },
+    "FSharp.inlayHints.parameterNames": false,
     "[fsharp]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "Ionide.Ionide-fsharp"
