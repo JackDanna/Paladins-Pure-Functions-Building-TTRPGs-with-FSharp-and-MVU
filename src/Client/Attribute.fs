@@ -1,6 +1,10 @@
 module Attribute
 
-type Attribute = { Name: string; Value: int }
+type Attribute = 
+    {
+        Name: string
+        Value: int
+    }
 
 let init () = 
     { 
@@ -32,7 +36,10 @@ let update
 open Feliz
 open Feliz.DaisyUI
 
-let view (model: Attribute) (dispatch: Msg -> unit) =
+let view 
+    (model: Attribute)
+    (dispatch: Msg -> unit)
+    =
     Html.div [
         prop.className "flex items-center gap-4"
         prop.children [
@@ -44,7 +51,7 @@ let view (model: Attribute) (dispatch: Msg -> unit) =
                 prop.text "+"
                 prop.onClick (fun e -> dispatch AddOneToValue)
             ]
-            
+
             Daisy.button.button [
                 prop.text "-"
                 prop.onClick (fun (e: Browser.Types.MouseEvent) -> dispatch MinusOneToValue)
