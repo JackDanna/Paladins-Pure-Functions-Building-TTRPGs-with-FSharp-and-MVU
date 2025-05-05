@@ -1,2 +1,5 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source(none);
+@source "./output/*.fs.js";
 @plugin "daisyui";
+
+@config './tailwind.config.js';
