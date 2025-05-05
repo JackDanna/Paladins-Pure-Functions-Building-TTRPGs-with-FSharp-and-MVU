@@ -1,9 +1,11 @@
 module Attribute
 
+// Model
 type Attribute = { Name: string; Value: int }
 
 let init () = { Name = "Strength"; Value = 0 }
 
+// Update
 type Msg =
     | ModifyName of string
     | AddOneToValue
@@ -16,6 +18,7 @@ let update (msg: Msg) (model: Attribute) =
     | AddOneToValue -> { model with Value = model.Value + 1 }
     | MinusOneToValue -> { model with Value = model.Value - 1 }
 
+// View
 open Feliz
 open Feliz.DaisyUI
 
