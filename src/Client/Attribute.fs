@@ -1,4 +1,4 @@
-module Example1
+module Attribute
 
 type Attribute = {
     Name: string
@@ -27,10 +27,22 @@ let update (msg: Msg) (model: Attribute) =
 
 
 open Feliz
+open Feliz.DaisyUI
 
 let view (model: Attribute) (dispatch: Msg -> unit) =
     Html.div [
 
-        
+        Daisy.label model.Name
+
+        Html.text model.Value
+
+        Daisy.button.button [
+            prop.text "+"
+            prop.onClick (fun e-> dispatch AddOneToValue )
+        ]
+        Daisy.button.button [
+            prop.text "+"
+            prop.onClick (fun e-> dispatch MinusOneToValue )
+        ]
 
     ]

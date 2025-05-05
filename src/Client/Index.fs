@@ -4,20 +4,24 @@ open Elmish
 open SAFE
 open Shared
 
+open Attribute
+
 type Model = {
     Todos: RemoteData<Todo list>
     Input: string
+    Attribute: Attribute
 }
 
 type Msg =
     | SetInput of string
     | LoadTodos of ApiCall<unit, Todo list>
     | SaveTodo of ApiCall<string, Todo list>
+    | AttributeMsg of Attribute.Msg
 
 let todosApi = Api.makeProxy<ITodosApi> ()
 
 let init () =
-    let initialModel = { Todos = NotStarted; Input = "" }
+    let initialModel = { Todos = NotStarted; Input = ""; Attribute = Attribute.init() }
     let initialCmd = LoadTodos(Start()) |> Cmd.ofMsg
 
     initialModel, initialCmd
@@ -46,6 +50,8 @@ let update msg model =
                     Todos = RemoteData.Loaded todos
             },
             Cmd.none
+    | AttributeMsg msg -> 
+        { model with Attribute = Attribute.update msg model.Attribute }, Cmd.none
 
 open Feliz
 
@@ -138,6 +144,7 @@ let view model dispatch =
                             Html.div [
                                 prop.className "bg-white/20 backdrop-blur-lg p-4 sm:p-8 rounded-xl shadow-lg border border-white/30 mx-4 sm:mx-0 max-w-full sm:max-w-2xl"
                                 prop.children [
+                                    Attribute.view model.Attribute (AttributeMsg >> dispatch)
                                     Html.h1 [
                                         prop.className "text-center text-3xl sm:text-5xl font-bold mb-3 p-2 sm:p-4"
                                         prop.text "Paladins_Pure_Functions_Building_TTRPGs_with_FSharp_and_MVU"
