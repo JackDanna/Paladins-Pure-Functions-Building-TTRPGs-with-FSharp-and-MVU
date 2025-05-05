@@ -4,8 +4,6 @@ open Elmish
 open SAFE
 open Shared
 
-open Attribute
-
 type Model = {
     Todos: RemoteData<Todo list>
     Input: string
