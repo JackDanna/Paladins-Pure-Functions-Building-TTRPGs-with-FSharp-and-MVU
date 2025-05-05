@@ -44,6 +44,7 @@
             ionide.ionide-fsharp
             oldPkgs.vscode-extensions.ms-dotnettools.csharp # We need to make sure we use version 2.39.32 since there is a bug otherise: https://github.com/ionide/ionide-vscode-fsharp/issues/2039
             ms-dotnettools.vscode-dotnet-runtime
+            bradlc.vscode-tailwindcss
 
             jnoortheen.nix-ide
             mhutchie.git-graph
