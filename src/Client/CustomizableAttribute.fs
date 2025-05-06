@@ -29,21 +29,16 @@ let view (model: Model) (dispatch: Msg -> unit) =
         prop.children [
             Daisy.cardBody [
                 prop.className "flex flex-row items-center gap-4"
-
                 prop.children [
                     Daisy.input [
                         color.bgPrimary
                         prop.value model.Name
                         prop.onTextChange (ModifyName >> dispatch)
                     ]
-
                     Html.text model.Value
-
                     Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
-
                     Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
                 ]
-
             ]
         ]
     ]
