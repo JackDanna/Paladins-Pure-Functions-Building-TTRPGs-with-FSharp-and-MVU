@@ -3,7 +3,7 @@ module CustomizableAttributeList
 open CustomizableAttribute
 
 // Model
-type CustomizableAttributeList = Model List
+type CustomizableAttributeList = CustomizableAttribute List
 
 let init () =
     List.map CustomizableAttribute.init [ "Strength"; "Agility"; "Intelligence"; "Charisma" ]

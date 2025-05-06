@@ -1,7 +1,7 @@
 module CustomizableAttribute
 
 // Model
-type Model = { Name: string; Value: int }
+type CustomizableAttribute = { Name: string; Value: int }
 
 let init name = { Name = name; Value = 0 }
 
@@ -11,7 +11,7 @@ type Msg =
     | AddOneToValue
     | MinusOneToValue
 
-let update (msg: Msg) (model: Model) =
+let update (msg: Msg) (model: CustomizableAttribute) =
 
     match msg with
     | ModifyName newName -> { model with Name = newName }
@@ -22,7 +22,7 @@ let update (msg: Msg) (model: Model) =
 open Feliz
 open Feliz.DaisyUI
 
-let view (model: Model) (dispatch: Msg -> unit) =
+let view (model: CustomizableAttribute) (dispatch: Msg -> unit) =
     Daisy.card [
         card.border
         prop.className "m-2 inline-flex bg-base-200"
