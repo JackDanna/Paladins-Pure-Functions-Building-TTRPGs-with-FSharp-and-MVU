@@ -1,22 +1,22 @@
 module Character
 
-open CustomizableAttribute
+open Attribute
 
 // Model
 type Character = {
     CharacterName: string
-    CustomizableAttribute: CustomizableAttribute
+    CustomizableAttribute: Attribute
 }
 
 let init () = {
     CharacterName = ""
-    CustomizableAttribute = CustomizableAttribute.init "Strength"
+    CustomizableAttribute = Attribute.init "Strength"
 }
 
 // Update
 type Msg =
     | ModifyCharacterName of string
-    | CustomizableAttributeMsg of CustomizableAttribute.Msg
+    | CustomizableAttributeMsg of Attribute.Msg
 
 let update (msg: Msg) (model: Character) =
     match msg with
@@ -26,7 +26,7 @@ let update (msg: Msg) (model: Character) =
       }
     | CustomizableAttributeMsg msg -> {
         model with
-            CustomizableAttribute = CustomizableAttribute.update msg model.CustomizableAttribute
+            CustomizableAttribute = Attribute.update msg model.CustomizableAttribute
       }
 
 // View
@@ -44,6 +44,6 @@ let view (model: Character) (dispatch: Msg -> unit) =
                 prop.value model.CharacterName
                 prop.onTextChange (ModifyCharacterName >> dispatch)
             ]
-            CustomizableAttribute.view model.CustomizableAttribute (CustomizableAttributeMsg >> dispatch)
+            Attribute.view model.CustomizableAttribute (CustomizableAttributeMsg >> dispatch)
         ]
     ]

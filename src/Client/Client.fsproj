@@ -9,8 +9,8 @@
     <None Include="tailwind.config.js" />
     <None Include="index.html" />
     <None Include="paket.references" />
+    
     <Compile Include="Attribute.fs" />
-    <Compile Include="CustomizableAttribute.fs" />
     <Compile Include="Character.fs" />
     <Compile Include="CustomizableAttributeList.fs" />
     <Compile Include="Character2.fs" />

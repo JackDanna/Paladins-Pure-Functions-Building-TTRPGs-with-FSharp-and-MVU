@@ -1,22 +1,22 @@
 module Character2
 
-open CustomizableAttributeList
+open AttributeList
 
 // Model
 type Character = {
     CharacterName: string
-    CustomizableAttributeList: CustomizableAttributeList
+    CustomizableAttributeList: AttributeList
 }
 
 let init () = {
     CharacterName = ""
-    CustomizableAttributeList = CustomizableAttributeList.init ()
+    CustomizableAttributeList = AttributeList.init ()
 }
 
 // Update
 type Msg =
     | ModifyCharacterName of string
-    | CustomizableAttributeListMsg of CustomizableAttributeList.Msg
+    | CustomizableAttributeListMsg of AttributeList.Msg
 
 let update (msg: Msg) (model: Character) =
     match msg with
@@ -26,7 +26,7 @@ let update (msg: Msg) (model: Character) =
       }
     | CustomizableAttributeListMsg msg -> {
         model with
-            CustomizableAttributeList = CustomizableAttributeList.update msg model.CustomizableAttributeList
+            CustomizableAttributeList = AttributeList.update msg model.CustomizableAttributeList
       }
 
 // View
@@ -44,6 +44,6 @@ let view (model: Character) (dispatch: Msg -> unit) =
                 prop.value model.CharacterName
                 prop.onTextChange (ModifyCharacterName >> dispatch)
             ]
-            CustomizableAttributeList.view model.CustomizableAttributeList (CustomizableAttributeListMsg >> dispatch)
+            AttributeList.view model.CustomizableAttributeList (CustomizableAttributeListMsg >> dispatch)
         ]
     ]
