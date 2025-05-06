@@ -23,18 +23,28 @@ open Feliz
 open Feliz.DaisyUI
 
 let view (model: Attribute) (dispatch: Msg -> unit) =
-    Html.div [
-        prop.className "flex items-center gap-4 border-2"
+    Daisy.card [
+        card.border
+        prop.className "m-10 inline-flex bg-base-200"
         prop.children [
-            Daisy.input [
-                prop.value model.Name
-                prop.onTextChange (fun newString -> dispatch (ModifyName newString))
+            Daisy.cardBody [
+                prop.className "flex flex-row items-center gap-4"
+
+                prop.children [
+
+                    Daisy.input [
+                        prop.value model.Name
+                        prop.onTextChange (fun newString -> dispatch (ModifyName newString))
+                    ]
+
+                    Html.text model.Value
+
+                    Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
+
+                    Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
+
+                ]
+
             ]
-
-            Html.text model.Value
-
-            Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
-
-            Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
         ]
     ]

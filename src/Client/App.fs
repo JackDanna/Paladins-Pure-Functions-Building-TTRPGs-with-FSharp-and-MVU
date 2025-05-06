@@ -12,7 +12,8 @@ open Elmish.HMR
 #endif
 
 // Program.mkProgram Index.init Index.update Index.view
-Program.mkSimple SimpleIndex.init SimpleIndex.update SimpleIndex.view
+//Program.mkSimple SimpleIndex.init SimpleIndex.update SimpleIndex.view
+Program.mkSimple (fun () -> Attribute.init "Strength") Attribute.update Attribute.view
 #if DEBUG
 |> Program.withConsoleTrace
 #endif
