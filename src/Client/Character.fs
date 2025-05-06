@@ -45,14 +45,13 @@ let view (model: Character) (dispatch: Msg -> unit) =
     Html.div [
         prop.className ""
         prop.children [
-
             Daisy.input [
                 prop.type'.text
                 prop.className "input-primary bg-base-200 text-center text-2xl w-full m-4"
                 prop.placeholder "Enter Character Name..."
                 prop.value model.CharacterName
+                prop.onTextChange (ModifyCharacterName >> dispatch)
             ]
-
             Html.div [
                 prop.className "flex flex-col items-center"
                 prop.children [
@@ -61,10 +60,10 @@ let view (model: Character) (dispatch: Msg -> unit) =
                         prop.type'.text
                         prop.placeholder "Enter Character Art URL..."
                         prop.value model.CharacterArtURL
+                        prop.onTextChange (ModifyCharacterArtURL >> dispatch)
                     ]
                 ]
             ]
-
             CustomizableAttribute.view model.CustomizableAttribute (CustomizableAttributeMsg >> dispatch)
         ]
     ]
