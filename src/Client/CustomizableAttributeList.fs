@@ -27,6 +27,7 @@ open Feliz
 open Feliz.DaisyUI
 
 let view (model: CustomizableAttributeList) (dispatch: Msg -> unit) =
+
     Daisy.card [
         prop.className "flex items-center"
         prop.children (
