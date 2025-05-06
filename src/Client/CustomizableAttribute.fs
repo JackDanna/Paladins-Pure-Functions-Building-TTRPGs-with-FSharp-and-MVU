@@ -1,9 +1,9 @@
 module CustomizableAttribute
 
 // Model
-type CustomizableAttribute = { Name: string; Value: int }
+type CustomizableAttribute = { AttributeName: string; Value: int }
 
-let init name = { Name = name; Value = 0 }
+let init name = { AttributeName = name; Value = 0 }
 
 // Update
 type Msg =
@@ -14,7 +14,7 @@ type Msg =
 let update (msg: Msg) (model: CustomizableAttribute) =
 
     match msg with
-    | ModifyName newName -> { model with Name = newName }
+    | ModifyName newName -> { model with AttributeName = newName }
     | AddOneToValue -> { model with Value = model.Value + 1 }
     | MinusOneToValue -> { model with Value = model.Value - 1 }
 
@@ -32,7 +32,7 @@ let view (model: CustomizableAttribute) (dispatch: Msg -> unit) =
                 prop.children [
                     Daisy.input [
                         color.bgPrimary
-                        prop.value model.Name
+                        prop.value model.AttributeName
                         prop.onTextChange (ModifyName >> dispatch)
                     ]
                     Html.text model.Value
