@@ -5,8 +5,8 @@ open Attribute
 // Model
 type AttributeList = Attribute List
 
-let init () =
-    List.map Attribute.init [ "Strength"; "Agility"; "Intelligence"; "Charisma" ]
+let init attributeNameList =
+    List.map Attribute.init attributeNameList
 
 // Update
 type Msg = AttributeMsgAtPosition of attributeMsg: Attribute.Msg * position: int

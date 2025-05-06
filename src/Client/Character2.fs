@@ -10,7 +10,7 @@ type Character = {
 
 let init () = {
     CharacterName = ""
-    CustomizableAttributeList = AttributeList.init ()
+    CustomizableAttributeList = AttributeList.init [ "Strength"; "Agility"; "Intelligence"; "Charisma" ]
 }
 
 // Update
