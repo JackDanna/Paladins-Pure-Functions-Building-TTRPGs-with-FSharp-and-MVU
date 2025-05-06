@@ -1,20 +1,18 @@
 module Attribute
 
 // Model
-type Attribute = { Name: string; Value: int }
+type Model = { Name: string; Value: int }
 
-let init name = { Name = name; Value = 0 }
+let init () = { Name = "Strength"; Value = 0 }
 
 // Update
 type Msg =
-    | ModifyName of string
     | AddOneToValue
     | MinusOneToValue
 
-let update (msg: Msg) (model: Attribute) =
+let update (msg: Msg) (model: Model) =
 
     match msg with
-    | ModifyName newName -> { model with Name = newName }
     | AddOneToValue -> { model with Value = model.Value + 1 }
     | MinusOneToValue -> { model with Value = model.Value - 1 }
 
@@ -22,7 +20,7 @@ let update (msg: Msg) (model: Attribute) =
 open Feliz
 open Feliz.DaisyUI
 
-let view (model: Attribute) (dispatch: Msg -> unit) =
+let view (model: Model) (dispatch: Msg -> unit) =
     Daisy.card [
         card.border
         prop.className "m-10 inline-flex bg-base-200"
@@ -32,10 +30,7 @@ let view (model: Attribute) (dispatch: Msg -> unit) =
 
                 prop.children [
 
-                    Daisy.input [
-                        prop.value model.Name
-                        prop.onTextChange (fun newString -> dispatch (ModifyName newString))
-                    ]
+                    Daisy.badge [ color.bgPrimary; badge.lg; prop.text model.Name ]
 
                     Html.text model.Value
 
