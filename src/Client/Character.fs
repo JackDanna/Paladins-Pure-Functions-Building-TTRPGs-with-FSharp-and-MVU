@@ -35,11 +35,11 @@ open Feliz.DaisyUI
 
 let view (model: Character) (dispatch: Msg -> unit) =
     Html.div [
-        prop.className ""
+        prop.className "flex flex-col items-center"
         prop.children [
             Daisy.input [
                 prop.type'.text
-                prop.className "input-primary bg-base-200 text-center text-2xl w-full m-4"
+                prop.className "input-primary bg-base-200 text-center text-2xl w-3/4 m-4"
                 prop.placeholder "Enter Character Name..."
                 prop.value model.CharacterName
                 prop.onTextChange (ModifyCharacterName >> dispatch)
