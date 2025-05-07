@@ -49,7 +49,7 @@ let view (model: AttributeWithSkills) (dispatch: Msg -> unit) =
                 [
                     Daisy.input [
                         color.bgPrimary
-                        prop.className "text-center"
+                        prop.className "text-center text-white"
                         prop.value model.AttributeWithSkillsName
                         prop.onTextChange (fun newName -> dispatch (ModifyName newName))
                     ]
