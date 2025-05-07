@@ -13,7 +13,7 @@ open Elmish.HMR
 
 // Program.mkProgram Index.init Index.update Index.view
 //Program.mkSimple SimpleIndex.init SimpleIndex.update SimpleIndex.view
-Program.mkSimple Character2.init Character2.update Character2.view
+Program.mkSimple Character.init Character.update Character.view
 #if DEBUG
 |> Program.withConsoleTrace
 #endif
