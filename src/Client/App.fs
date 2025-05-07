@@ -13,10 +13,19 @@ open Elmish.HMR
 
 // Program.mkProgram Index.init Index.update Index.view
 //Program.mkSimple SimpleIndex.init SimpleIndex.update SimpleIndex.view
+// Program.mkSimple
+//     (fun () -> Character.init [ "Strength"; "Agility"; "Intelligence"; "Charisma" ])
+//     Character.update
+//     Character.view
 Program.mkSimple
-    (fun () -> Character.init [ "Strength"; "Agility"; "Intelligence"; "Charisma" ])
-    Character.update
-    Character.view
+    (fun () ->
+        Character2.init "" [
+            "Strength", [ "Athletics"; "Lift"; "Endurance" ]
+            "Agility", [ "Acrobatics"; "Slieght Of Hand"; "Stealth" ]
+            "Intelligence", [ "History"; "Arcana"; "Survival" ]
+        ])
+    Character2.update
+    Character2.view
 #if DEBUG
 |> Program.withConsoleTrace
 #endif
