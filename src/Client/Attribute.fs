@@ -33,7 +33,7 @@ let view (model: Attribute) (dispatch: Msg -> unit) =
                     Daisy.input [
                         color.bgPrimary
                         prop.value model.AttributeName
-                        prop.onTextChange (ModifyName >> dispatch)
+                        prop.onTextChange (fun newName -> dispatch (ModifyName newName))
                     ]
                     Html.text model.Value
                     Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]

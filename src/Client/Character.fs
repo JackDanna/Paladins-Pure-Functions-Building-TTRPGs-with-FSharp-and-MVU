@@ -8,9 +8,9 @@ type Character = {
     CustomizableAttributeList: AttributeList
 }
 
-let init () = {
+let init attributeNameList = {
     CharacterName = ""
-    CustomizableAttributeList = AttributeList.init [ "Strength"; "Agility"; "Intelligence"; "Charisma" ]
+    CustomizableAttributeList = AttributeList.init attributeNameList
 }
 
 // Update
