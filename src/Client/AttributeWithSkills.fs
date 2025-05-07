@@ -22,8 +22,16 @@ type Msg =
     | MinusOneToValue
     | SkillListMsg of SkillList.Msg
 
-let update (msg: Msg) (model: AttributeWithSkills) =
+let injectModelIntoMsg model msg =
     match msg with
+    | SkillListMsg(SkillMsgAtPosition(Skill.AddOneToValue _, positions)) ->
+        SkillListMsg(SkillMsgAtPosition(Skill.AddOneToValue(Some model.Value), positions))
+    | SkillListMsg(SkillMsgAtPosition(Skill.MinusOneToValue _, positions)) ->
+        SkillListMsg(SkillMsgAtPosition(Skill.MinusOneToValue(Some model.Value), positions))
+    | _ -> msg
+
+let update (msg: Msg) (model: AttributeWithSkills) =
+    match injectModelIntoMsg model msg with
     | ModifyName newName -> {
         model with
             AttributeWithSkillsName = newName
