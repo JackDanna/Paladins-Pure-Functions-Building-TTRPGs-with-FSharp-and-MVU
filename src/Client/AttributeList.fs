@@ -12,7 +12,6 @@ let init attributeNameList =
 type Msg = AttributeMsgAtPosition of attributeMsg: Attribute.Msg * position: int
 
 let update (msg: Msg) (model: AttributeList) =
-
     match msg with
     | AttributeMsgAtPosition(msg: Attribute.Msg, position: int) ->
         model
@@ -27,12 +26,17 @@ open Feliz
 open Feliz.DaisyUI
 
 let view (model: AttributeList) (dispatch: Msg -> unit) =
-
     Daisy.card [
         prop.className "flex items-center"
         prop.children (
             model
             |> List.mapi (fun index attribute ->
-                Attribute.view attribute (fun msg -> AttributeMsgAtPosition(msg, index) |> dispatch))
+
+                let dispatchForAttributeAtPosition (msg: Attribute.Msg) =
+                    dispatch (AttributeMsgAtPosition(msg, index))
+
+                Attribute.view attribute dispatchForAttributeAtPosition)
         )
     ]
+
+//Attribute.view attribute (fun msg -> AttributeMsgAtPosition(msg, index) |> dispatch)
