@@ -12,7 +12,7 @@
     
     <Compile Include="Attribute.fs" />
     
-    <Compile Include="CustomizableAttributeList.fs" />
+    <Compile Include="AttributeList.fs" />
     <Compile Include="Character2.fs" />
     <Compile Include="SimpleIndex.fs" />
     <Compile Include="Index.fs" />
