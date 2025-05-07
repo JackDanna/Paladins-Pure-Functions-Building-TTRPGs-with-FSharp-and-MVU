@@ -40,21 +40,26 @@ open Feliz
 open Feliz.DaisyUI
 
 let view (model: AttributeWithSkills) (dispatch: Msg -> unit) =
-    Daisy.table [
-        Html.thead [
-            [
-                Daisy.input [
-                    color.bgPrimary
-                    prop.value model.AttributeWithSkillsName
-                    prop.onTextChange (fun newName -> dispatch (ModifyName newName))
+    Daisy.card [
+        card.border
+        prop.className "flex items-center"
+        Daisy.table [
+            Html.thead [
+                [
+                    Daisy.input [
+                        color.bgPrimary
+                        prop.value model.AttributeWithSkillsName
+                        prop.onTextChange (fun newName -> dispatch (ModifyName newName))
+                    ]
+                    Html.text model.Value
+                    Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
+                    Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
                 ]
-                Html.text model.Value
-                Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
-                Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
+                |> List.map Html.th
+                |> Html.tr
             ]
-            |> List.map Html.th
-            |> Html.tr
-        ]
 
-        Html.tbody (SkillList.view model.SkillList (SkillListMsg >> dispatch))
+            Html.tbody (SkillList.view model.SkillList (SkillListMsg >> dispatch))
+        ]
+        |> prop.children
     ]

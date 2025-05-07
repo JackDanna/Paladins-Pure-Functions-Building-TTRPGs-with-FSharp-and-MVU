@@ -1,24 +1,24 @@
-module Character
+module Character2
 
-open AttributeList
+open AttributeWithSkillsList
 
 // Model
-type Character = {
+type Character2 = {
     CharacterName: string
-    AttributeList: AttributeList
+    AttributeWithSkillsList: AttributeWithSkillsList
 }
 
-let init attributeNameList = {
-    CharacterName = ""
-    AttributeList = AttributeList.init attributeNameList
+let init characterName attributeNameList = {
+    CharacterName = characterName
+    AttributeWithSkillsList = AttributeWithSkillsList.init attributeNameList
 }
 
 // Update
 type Msg =
     | ModifyCharacterName of string
-    | AttributeListMsg of AttributeList.Msg
+    | AttributeListMsg of AttributeWithSkillsList.Msg
 
-let update (msg: Msg) (model: Character) =
+let update (msg: Msg) (model: Character2) =
     match msg with
     | ModifyCharacterName newCharacterName -> {
         model with
@@ -26,14 +26,14 @@ let update (msg: Msg) (model: Character) =
       }
     | AttributeListMsg msg -> {
         model with
-            AttributeList = AttributeList.update msg model.AttributeList
+            AttributeWithSkillsList = AttributeWithSkillsList.update msg model.AttributeWithSkillsList
       }
 
 // View
 open Feliz
 open Feliz.DaisyUI
 
-let view (model: Character) (dispatch: Msg -> unit) =
+let view (model: Character2) (dispatch: Msg -> unit) =
     Html.div [
         prop.className "flex flex-col items-center"
         prop.children [
@@ -44,6 +44,6 @@ let view (model: Character) (dispatch: Msg -> unit) =
                 prop.value model.CharacterName
                 prop.onTextChange (ModifyCharacterName >> dispatch)
             ]
-            AttributeList.view model.AttributeList (AttributeListMsg >> dispatch)
+            AttributeWithSkillsList.view model.AttributeWithSkillsList (AttributeListMsg >> dispatch)
         ]
     ]
