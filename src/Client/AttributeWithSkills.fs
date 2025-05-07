@@ -42,6 +42,7 @@ open Feliz.DaisyUI
 let view (model: AttributeWithSkills) (dispatch: Msg -> unit) =
     Daisy.card [
         card.border
+        color.bgBase200
         prop.className "flex items-center m-2"
         Daisy.table [
             Html.thead [
