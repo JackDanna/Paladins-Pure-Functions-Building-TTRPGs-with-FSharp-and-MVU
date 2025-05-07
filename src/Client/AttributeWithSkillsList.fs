@@ -26,17 +26,16 @@ open Feliz
 open Feliz.DaisyUI
 
 let view (model: AttributeWithSkillsList) (dispatch: Msg -> unit) =
-    Daisy.card [
-        prop.className "flex items-center"
-        prop.children (
-            model
-            |> List.mapi (fun index attributeWithSkills ->
+    Html.div [
+        prop.className "flex flex-row"
+        model
+        |> List.mapi (fun index attributeWithSkills ->
 
-                let dispatchForAttributeAtPosition (msg: AttributeWithSkills.Msg) =
-                    dispatch (AttributeWithSkillsMsgAtPosition(msg, index))
+            let dispatchForAttributeAtPosition (msg: AttributeWithSkills.Msg) =
+                dispatch (AttributeWithSkillsMsgAtPosition(msg, index))
 
-                AttributeWithSkills.view attributeWithSkills dispatchForAttributeAtPosition)
-        )
+            AttributeWithSkills.view attributeWithSkills dispatchForAttributeAtPosition)
+        |> prop.children
     ]
 
 //AttributeWithSkills.view attributeWithSkills (fun msg -> AttributeMsgAtPosition(msg, index) |> dispatch)
