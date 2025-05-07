@@ -11,7 +11,7 @@
     <None Include="paket.references" />
     
     <Compile Include="Attribute.fs" />
-    <Compile Include="Character.fs" />
+    
     <Compile Include="CustomizableAttributeList.fs" />
     <Compile Include="Character2.fs" />
     <Compile Include="SimpleIndex.fs" />
