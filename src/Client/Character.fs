@@ -5,18 +5,18 @@ open AttributeList
 // Model
 type Character = {
     CharacterName: string
-    CustomizableAttributeList: AttributeList
+    AttributeList: AttributeList
 }
 
 let init attributeNameList = {
     CharacterName = ""
-    CustomizableAttributeList = AttributeList.init attributeNameList
+    AttributeList = AttributeList.init attributeNameList
 }
 
 // Update
 type Msg =
     | ModifyCharacterName of string
-    | CustomizableAttributeListMsg of AttributeList.Msg
+    | AttributeListMsg of AttributeList.Msg
 
 let update (msg: Msg) (model: Character) =
     match msg with
@@ -24,9 +24,9 @@ let update (msg: Msg) (model: Character) =
         model with
             CharacterName = newCharacterName
       }
-    | CustomizableAttributeListMsg msg -> {
+    | AttributeListMsg msg -> {
         model with
-            CustomizableAttributeList = AttributeList.update msg model.CustomizableAttributeList
+            AttributeList = AttributeList.update msg model.AttributeList
       }
 
 // View
@@ -44,6 +44,6 @@ let view (model: Character) (dispatch: Msg -> unit) =
                 prop.value model.CharacterName
                 prop.onTextChange (ModifyCharacterName >> dispatch)
             ]
-            AttributeList.view model.CustomizableAttributeList (CustomizableAttributeListMsg >> dispatch)
+            AttributeList.view model.AttributeList (AttributeListMsg >> dispatch)
         ]
     ]
