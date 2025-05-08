@@ -1,18 +1,18 @@
 module AttributeWithSkills
 
-open SkillList
+open Skill
 
 // Model
 type AttributeWithSkills = {
     AttributeWithSkillsName: string
     Value: int
-    SkillList: SkillList
+    SkillList: Skill List
 }
 
 let init (attributeWithSkillsName, skillListNames) = {
     AttributeWithSkillsName = attributeWithSkillsName
     Value = 0
-    SkillList = SkillList.init skillListNames
+    SkillList = List.map Skill.init skillListNames
 }
 
 // Update
@@ -20,14 +20,14 @@ type Msg =
     | ModifyName of string
     | AddOneToValue
     | MinusOneToValue
-    | SkillListMsg of SkillList.Msg
+    | SkillMsgAtPosition of skillMsg: Skill.Msg * position: int
 
 let injectModelIntoMsg model msg =
     match msg with
-    | SkillListMsg(SkillMsgAtPosition(Skill.AddOneToValue _, positions)) ->
-        SkillListMsg(SkillMsgAtPosition(Skill.AddOneToValue(Some model.Value), positions))
-    | SkillListMsg(SkillMsgAtPosition(Skill.MinusOneToValue _, positions)) ->
-        SkillListMsg(SkillMsgAtPosition(Skill.MinusOneToValue(Some model.Value), positions))
+    | SkillMsgAtPosition(Skill.AddOneToValue _, positions) ->
+        SkillMsgAtPosition(Skill.AddOneToValue(Some model.Value), positions)
+    | SkillMsgAtPosition(Skill.MinusOneToValue _, positions) ->
+        SkillMsgAtPosition(Skill.MinusOneToValue(Some model.Value), positions)
     | _ -> msg
 
 let update (msg: Msg) (model: AttributeWithSkills) =
@@ -38,9 +38,11 @@ let update (msg: Msg) (model: AttributeWithSkills) =
       }
     | AddOneToValue -> { model with Value = model.Value + 1 }
     | MinusOneToValue -> { model with Value = model.Value - 1 }
-    | SkillListMsg msg -> {
+    | SkillMsgAtPosition(msg: Skill.Msg, position: int) -> {
         model with
-            SkillList = SkillList.update msg model.SkillList
+            SkillList =
+                model.SkillList
+                |> List.mapi (fun index skill -> if index = position then Skill.update msg skill else skill)
       }
 
 // View
@@ -69,7 +71,9 @@ let view (model: AttributeWithSkills) (dispatch: Msg -> unit) =
                 |> Html.tr
             ]
 
-            Html.tbody (SkillList.view model.SkillList (SkillListMsg >> dispatch))
+            model.SkillList
+            |> List.mapi (fun index skill -> Skill.view skill (fun msg -> SkillMsgAtPosition(msg, index) |> dispatch))
+            |> Html.tbody
         ]
         |> prop.children
     ]

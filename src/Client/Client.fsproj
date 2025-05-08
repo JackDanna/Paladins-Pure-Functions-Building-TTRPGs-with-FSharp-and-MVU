@@ -13,7 +13,7 @@
     <Compile Include="AttributeList.fs" />
     
     <Compile Include="Skill.fs" />
-    <Compile Include="SkillList.fs" />
+    
     <Compile Include="AttributeWithSkills.fs" />
     <Compile Include="AttributeWithSkillsList.fs" />
     <Compile Include="Character.fs" />
