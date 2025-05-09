@@ -4,6 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attribute.fs" />
+    <Compile Include="AttributeList.fs" />
+    <Compile Include="Skill.fs" />
+    <Compile Include="AttributeWithSkills.fs" />
     <Compile Include="Shared.fs" />
     <Content Include="paket.references" />
   </ItemGroup>

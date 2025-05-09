@@ -8,8 +8,8 @@
     <None Include="postcss.config.js" />
     <None Include="tailwind.config.js" />
     <None Include="index.html" />
-    <None Include="paket.references" />
-    <Compile Include="Attribute.fs" />
+    <None Include="paket.references" /><Compile Include="Attribute.fs" />
+    
     <Compile Include="AttributeList.fs" />
     
     <Compile Include="Skill.fs" />
