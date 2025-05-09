@@ -45,9 +45,10 @@ let update msg model =
         {
             model with
                 Character =
-                    Character.update
-                        (Character.Msg.SetCharacterNameAndCharacterArtURL(characterName, characterArtUrl))
-                        model.Character
+                    model.Character
+                    |> Character.update (Character.Msg.ModifyCharacterName characterName)
+                    |> Character.update (Character.Msg.ModifyCharacterUrl characterArtUrl)
+
                 DataFromServer = "Received data from the server"
         },
         Cmd.none
