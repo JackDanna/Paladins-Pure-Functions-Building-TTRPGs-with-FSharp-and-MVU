@@ -16,7 +16,6 @@ let init () =
     },
     Cmd.none
 
-
 // Update
 type Msg =
     | CharacterMsg of Character.Msg
@@ -35,16 +34,13 @@ let update msg model =
         model,
         Cmd.OfAsync.perform
             (fun () -> async {
-
                 do! Async.Sleep 2000
 
                 return
                     "Shrek the Malevolent", "https://www.cartoonbrew.com/wp-content/uploads/2024/07/shrek5-580x326.jpg"
-
             })
             ()
             GotDataFromServer
-
     | GotDataFromServer(characterName, characterArtUrl) ->
         {
             model with
