@@ -27,6 +27,7 @@ type Msg =
     | ModifyCharacterName of string
     | ModifyCharacterUrl of string
     | AttributeListMsg of AttributeWithSkillsList.Msg
+    | SetCharacterNameAndCharacterArtURL of characterName: string * characterArtUrl: string
 
 let update (msg: Msg) (model: Character) =
     match msg with
@@ -41,4 +42,9 @@ let update (msg: Msg) (model: Character) =
     | AttributeListMsg msg -> {
         model with
             AttributeWithSkillsList = AttributeWithSkillsList.update msg model.AttributeWithSkillsList
+      }
+    | SetCharacterNameAndCharacterArtURL(newCharacterName, newCharacterArtUrl) -> {
+        model with
+            CharacterName = newCharacterName
+            CharacterArtUrl = newCharacterArtUrl
       }

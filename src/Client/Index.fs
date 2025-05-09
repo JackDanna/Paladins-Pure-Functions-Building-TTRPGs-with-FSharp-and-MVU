@@ -21,7 +21,7 @@ let init () =
 type Msg =
     | CharacterMsg of Character.Msg
     | FetchDataFromServer
-    | GotDataFromServer of string
+    | GotDataFromServer of characterName: string * characterArtUrl: string
 
 let update msg model =
     match msg with
@@ -37,13 +37,24 @@ let update msg model =
             (fun () -> async {
 
                 do! Async.Sleep 2000
-                return "This is the stuff form the server"
+
+                return
+                    "Shrek the Malevolent", "https://www.cartoonbrew.com/wp-content/uploads/2024/07/shrek5-580x326.jpg"
 
             })
             ()
             GotDataFromServer
 
-    | GotDataFromServer data -> { model with DataFromServer = data }, Cmd.none
+    | GotDataFromServer(characterName, characterArtUrl) ->
+        {
+            model with
+                Character =
+                    Character.update
+                        (Character.Msg.SetCharacterNameAndCharacterArtURL(characterName, characterArtUrl))
+                        model.Character
+                DataFromServer = "Received data from the server"
+        },
+        Cmd.none
 
 // View
 
