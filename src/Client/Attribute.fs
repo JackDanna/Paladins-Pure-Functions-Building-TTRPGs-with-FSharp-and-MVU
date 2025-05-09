@@ -1,22 +1,22 @@
 module Attribute
 
 // Model
-type Attribute = { AttributeName: string; Value: int }
+type Attribute = { AttributeName: string; Level: int }
 
-let init name = { AttributeName = name; Value = 0 }
+let init name = { AttributeName = name; Level = 0 }
 
 // Update
 type Msg =
     | ModifyName of string
-    | AddOneToValue
-    | MinusOneToValue
+    | AddOneToLevel
+    | MinusOneToLevel
 
 let update (msg: Msg) (model: Attribute) =
 
     match msg with
     | ModifyName newName -> { model with AttributeName = newName }
-    | AddOneToValue -> { model with Value = model.Value + 1 }
-    | MinusOneToValue -> { model with Value = model.Value - 1 }
+    | AddOneToLevel -> { model with Level = model.Level + 1 }
+    | MinusOneToLevel -> { model with Level = model.Level - 1 }
 
 // View
 open Feliz
@@ -33,11 +33,11 @@ let view (model: Attribute) (dispatch: Msg -> unit) =
                     Daisy.input [
                         color.bgPrimary
                         prop.value model.AttributeName
-                        prop.onTextChange (fun newName -> dispatch (ModifyName newName))
+                        prop.onTextChange (fun userInput -> dispatch (ModifyName userInput))
                     ]
-                    Html.text model.Value
-                    Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
-                    Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
+                    Html.text model.Level
+                    Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToLevel) ]
+                    Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToLevel) ]
                 ]
             ]
         ]
