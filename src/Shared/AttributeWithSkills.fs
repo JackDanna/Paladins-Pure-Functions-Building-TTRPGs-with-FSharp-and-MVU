@@ -5,13 +5,13 @@ open Skill
 // Model
 type AttributeWithSkills = {
     AttributeWithSkillsName: string
-    Value: int
+    Level: int
     SkillList: Skill List
 }
 
 let init (attributeWithSkillsName, skillListNames) = {
     AttributeWithSkillsName = attributeWithSkillsName
-    Value = 0
+    Level = 0
     SkillList = List.map Skill.init skillListNames
 }
 
@@ -25,9 +25,9 @@ type Msg =
 let injectModelIntoMsg model msg =
     match msg with
     | SkillMsgAtPosition(Skill.AddOneToValue _, positions) ->
-        SkillMsgAtPosition(Skill.AddOneToValue(Some model.Value), positions)
+        SkillMsgAtPosition(Skill.AddOneToValue(Some model.Level), positions)
     | SkillMsgAtPosition(Skill.MinusOneToValue _, positions) ->
-        SkillMsgAtPosition(Skill.MinusOneToValue(Some model.Value), positions)
+        SkillMsgAtPosition(Skill.MinusOneToValue(Some model.Level), positions)
     | _ -> msg
 
 let update (msg: Msg) (model: AttributeWithSkills) =
@@ -36,8 +36,8 @@ let update (msg: Msg) (model: AttributeWithSkills) =
         model with
             AttributeWithSkillsName = newName
       }
-    | AddOneToValue -> { model with Value = model.Value + 1 }
-    | MinusOneToValue -> { model with Value = model.Value - 1 }
+    | AddOneToValue -> { model with Level = model.Level + 1 }
+    | MinusOneToValue -> { model with Level = model.Level - 1 }
     | SkillMsgAtPosition(msg: Skill.Msg, position: int) -> {
         model with
             SkillList =

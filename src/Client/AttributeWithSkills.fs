@@ -20,7 +20,7 @@ let view (model: AttributeWithSkills) (dispatch: Msg -> unit) =
                         prop.value model.AttributeWithSkillsName
                         prop.onTextChange (fun newName -> dispatch (ModifyName newName))
                     ]
-                    Html.text model.Value
+                    Html.text model.Level
                     Daisy.button.button [ prop.text "+"; prop.onClick (fun _ -> dispatch AddOneToValue) ]
                     Daisy.button.button [ prop.text "-"; prop.onClick (fun _ -> dispatch MinusOneToValue) ]
                 ]
