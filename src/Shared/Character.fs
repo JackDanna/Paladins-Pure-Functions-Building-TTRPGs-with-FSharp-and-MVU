@@ -5,12 +5,14 @@ open AttributeWithSkillsList
 // Model
 type Character = {
     CharacterName: string
+    CharacterArtUrl: string
     AttributeWithSkillsList: AttributeWithSkillsList
 }
 
 let init () = {
 
     CharacterName = ""
+    CharacterArtUrl = ""
     AttributeWithSkillsList =
         AttributeWithSkillsList.init [
             "Strength", [ "Athletics"; "Lift"; "Endurance" ]
@@ -23,6 +25,7 @@ let init () = {
 // Update
 type Msg =
     | ModifyCharacterName of string
+    | ModifyCharacterUrl of string
     | AttributeListMsg of AttributeWithSkillsList.Msg
 
 let update (msg: Msg) (model: Character) =
@@ -30,6 +33,10 @@ let update (msg: Msg) (model: Character) =
     | ModifyCharacterName newCharacterName -> {
         model with
             CharacterName = newCharacterName
+      }
+    | ModifyCharacterUrl newCharacterArtUrl -> {
+        model with
+            CharacterArtUrl = newCharacterArtUrl
       }
     | AttributeListMsg msg -> {
         model with

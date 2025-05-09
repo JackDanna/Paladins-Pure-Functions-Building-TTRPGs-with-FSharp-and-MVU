@@ -17,6 +17,14 @@ let view (model: Character) (dispatch: Msg -> unit) =
                 prop.value model.CharacterName
                 prop.onTextChange (ModifyCharacterName >> dispatch)
             ]
+            Html.img [ prop.src model.CharacterArtUrl; prop.style [ style.width 800 ] ]
+            Daisy.input [
+                prop.value model.CharacterArtUrl
+                prop.className "text-center"
+                prop.placeholder "Enter Character Art URL"
+                prop.onTextChange (ModifyCharacterUrl >> dispatch)
+            ]
+
             AttributeWithSkillsList.view model.AttributeWithSkillsList (AttributeListMsg >> dispatch)
         ]
     ]
