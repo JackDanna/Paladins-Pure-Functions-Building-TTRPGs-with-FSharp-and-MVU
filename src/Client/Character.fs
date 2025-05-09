@@ -3,7 +3,7 @@ module Character
 open AttributeWithSkillsList
 
 // Model
-type Character2 = {
+type Character = {
     CharacterName: string
     AttributeWithSkillsList: AttributeWithSkillsList
 }
@@ -18,7 +18,7 @@ type Msg =
     | ModifyCharacterName of string
     | AttributeListMsg of AttributeWithSkillsList.Msg
 
-let update (msg: Msg) (model: Character2) =
+let update (msg: Msg) (model: Character) =
     match msg with
     | ModifyCharacterName newCharacterName -> {
         model with
@@ -33,7 +33,7 @@ let update (msg: Msg) (model: Character2) =
 open Feliz
 open Feliz.DaisyUI
 
-let view (model: Character2) (dispatch: Msg -> unit) =
+let view (model: Character) (dispatch: Msg -> unit) =
     Html.div [
         prop.className "flex flex-col items-center"
         prop.children [
