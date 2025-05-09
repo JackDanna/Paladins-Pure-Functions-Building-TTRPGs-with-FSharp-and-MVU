@@ -8,6 +8,7 @@
     <Compile Include="AttributeList.fs" />
     <Compile Include="Skill.fs" />
     <Compile Include="AttributeWithSkills.fs" />
+    <Compile Include="AttributeWithSkillsList.fs" />
     <Compile Include="Shared.fs" />
     <Content Include="paket.references" />
   </ItemGroup>
