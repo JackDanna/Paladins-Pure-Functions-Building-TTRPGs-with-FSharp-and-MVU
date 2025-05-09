@@ -1,4 +1,4 @@
-module Character2
+module Character
 
 open AttributeWithSkillsList
 

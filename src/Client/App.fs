@@ -19,13 +19,13 @@ open Elmish.HMR
 //     Character.view
 Program.mkSimple
     (fun () ->
-        Character2.init "" [
+        Character.init "" [
             "Strength", [ "Athletics"; "Lift"; "Endurance" ]
             "Agility", [ "Acrobatics"; "Slieght Of Hand"; "Stealth" ]
             "Intelligence", [ "History"; "Arcana"; "Survival" ]
         ])
-    Character2.update
-    Character2.view
+    Character.update
+    Character.view
 #if DEBUG
 |> Program.withConsoleTrace
 #endif
