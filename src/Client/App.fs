@@ -17,15 +17,16 @@ open Elmish.HMR
 //     (fun () -> Character.init [ "Strength"; "Agility"; "Intelligence"; "Charisma" ])
 //     Character.update
 //     Character.view
-Program.mkSimple
-    (fun () ->
-        Character.init "" [
-            "Strength", [ "Athletics"; "Lift"; "Endurance" ]
-            "Agility", [ "Acrobatics"; "Slieght Of Hand"; "Stealth" ]
-            "Intelligence", [ "History"; "Arcana"; "Survival" ]
-        ])
-    Character.update
-    Character.view
+// Program.mkSimple
+//     (fun () ->
+//         Character.init "" [
+//             "Strength", [ "Athletics"; "Lift"; "Endurance" ]
+//             "Agility", [ "Acrobatics"; "Slieght Of Hand"; "Stealth" ]
+//             "Intelligence", [ "History"; "Arcana"; "Survival" ]
+//         ])
+//     Character.update
+//     Character.view
+Program.mkProgram Index.init Index.update Index.view
 #if DEBUG
 |> Program.withConsoleTrace
 #endif

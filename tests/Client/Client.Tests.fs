@@ -2,7 +2,7 @@ module Client.Tests
 
 open Fable.Mocha
 
-open Index
+open OldIndex
 open Shared
 open SAFE
 
@@ -29,10 +29,10 @@ let client =
 
 let all =
     testList "All" [
-        #if FABLE_COMPILER // This preprocessor directive makes editor happy
+#if FABLE_COMPILER // This preprocessor directive makes editor happy
         Shared.Tests.shared
 #endif
-                client
+        client
     ]
 
 [<EntryPoint>]

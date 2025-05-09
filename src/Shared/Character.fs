@@ -8,9 +8,15 @@ type Character = {
     AttributeWithSkillsList: AttributeWithSkillsList
 }
 
-let init characterName attributeNameList = {
-    CharacterName = characterName
-    AttributeWithSkillsList = AttributeWithSkillsList.init attributeNameList
+let init () = {
+
+    CharacterName = ""
+    AttributeWithSkillsList =
+        AttributeWithSkillsList.init [
+            "Strength", [ "Athletics"; "Lift"; "Endurance" ]
+            "Agility", [ "Acrobatics"; "Slieght Of Hand"; "Stealth" ]
+            "Intelligence", [ "History"; "Arcana"; "Survival" ]
+        ]
 }
 
 // Update
