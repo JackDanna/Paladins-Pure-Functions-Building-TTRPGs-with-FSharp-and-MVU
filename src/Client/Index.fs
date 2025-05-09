@@ -36,7 +36,7 @@ let update msg model =
         Cmd.OfAsync.perform
             (fun () -> async {
 
-                do! Async.Sleep 5000
+                do! Async.Sleep 2000
                 return "This is the stuff form the server"
 
             })
@@ -56,6 +56,7 @@ let view (model: Index) (dispatch: Msg -> unit) =
         Daisy.navbar [
             prop.className "mb-2 shadow-lg bg-neutral text-neutral-content rounded-box"
             prop.children [
+                Daisy.navbarStart []
                 Daisy.navbarCenter [ Html.span [ prop.text model.DataFromServer; prop.className "text-2xl" ] ]
                 Daisy.navbarEnd [
                     Daisy.button.button [ prop.text "Click me"; prop.onClick (fun e -> dispatch FetchDataFromServer) ]
