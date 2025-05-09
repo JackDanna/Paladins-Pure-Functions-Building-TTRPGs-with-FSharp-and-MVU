@@ -14,8 +14,9 @@ let init () = {
     AttributeWithSkillsList =
         AttributeWithSkillsList.init [
             "Strength", [ "Athletics"; "Lift"; "Endurance" ]
-            "Agility", [ "Acrobatics"; "Slieght Of Hand"; "Stealth" ]
-            "Intelligence", [ "History"; "Arcana"; "Survival" ]
+            "Reflex", [ "Dexterity"; "Perception"; "Stealth" ]
+            "Intelligence", [ "Knowledge"; "Logic"; "Will" ]
+            "Charisma", [ "Deception"; "Intimidation"; "Persuasion" ]
         ]
 }
 
