@@ -2,14 +2,6 @@ STORAGE: NONE
 RESTRICTION: == net8.0
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    Elmish.Bridge.Client (7.1)
-      Elmish.Bridge.RPC (>= 7.0)
-      Fable.Browser.Dom (>= 2.14)
-      Fable.Browser.Url (>= 1.3.2)
-      Fable.Browser.WebSocket (>= 1.3)
-      Fable.Elmish (>= 4.0)
-      Fable.SimpleJson (>= 3.24)
-    Elmish.Bridge.RPC (7.0)
     Expecto (9.0.4)
       FSharp.Core (>= 4.6)
       Mono.Cecil (>= 0.11.3)
@@ -28,13 +20,6 @@ NUGET
       Fable.Core (>= 3.2.8)
       FSharp.Core (>= 4.7.2)
     Fable.Browser.Gamepad (1.3)
-      Fable.Core (>= 3.2.8)
-      FSharp.Core (>= 4.7.2)
-    Fable.Browser.Url (1.4)
-      Fable.Core (>= 3.2.8)
-      FSharp.Core (>= 4.7.2)
-    Fable.Browser.WebSocket (1.4)
-      Fable.Browser.Event (>= 1.6)
       Fable.Core (>= 3.2.8)
       FSharp.Core (>= 4.7.2)
     Fable.Browser.WebStorage (1.3)
