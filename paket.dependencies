@@ -2,6 +2,7 @@ source https://api.nuget.org/v3/index.json
 framework: net8.0
 storage: none
 
+nuget Elmish.Bridge.Client 7.1.0
 nuget Expecto ~> 9
 nuget Feliz.DaisyUI
 nuget SAFE.Server ~> 5
