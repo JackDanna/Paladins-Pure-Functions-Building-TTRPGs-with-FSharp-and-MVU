@@ -3,55 +3,69 @@ module Index
 open Character
 open Elmish
 
+open System
+open Browser
+open Elmish
+open Elmish.Bridge
+open Shared
+open Shared.Bridge
+
 // Model
+
+type ConnectionStatus =
+    | ConnectedToServer
+    | NotConnectedToServer
+
 type Index = {
-    Character: Character
-    DataFromServer: string
+    CharacterOption: Character option
+    ConnectionStatus: ConnectionStatus
+    EchoGuid: Guid
 }
 
 let init () =
     {
-        Character = Character.init ()
-        DataFromServer = "No data from server yet"
+        CharacterOption = None
+        ConnectionStatus = NotConnectedToServer
+        EchoGuid = Guid.NewGuid()
     },
     Cmd.none
 
 // Update
 type Msg =
+    | ConnectionLost
     | CharacterMsg of Character.Msg
-    | FetchDataFromServer
-    | GotDataFromServer of characterName: string * characterArtUrl: string
+    | RC of ServerToClientMsg // RC stands for Remote Client
 
 let update msg model =
     match msg with
+    | ConnectionLost -> init ()
     | CharacterMsg msg ->
+        match model.CharacterOption with
+        | Some character -> {
+            model with
+                CharacterOption = Character.update msg character |> Some
+          }
+        | None -> model
+        , Cmd.none
+    | RC(InitialConnection character) ->
         {
             model with
-                Character = Character.update msg model.Character
+                CharacterOption = character |> Some
+                ConnectionStatus = ConnectedToServer
         },
         Cmd.none
-    | FetchDataFromServer ->
-        model,
-        Cmd.OfAsync.perform
-            (fun () -> async {
-                do! Async.Sleep 2000
+    | RC(BroadcastedCharacterMsg(characerMsg, echoGuid)) ->
 
-                return
-                    "Shrek the Malevolent", "https://www.cartoonbrew.com/wp-content/uploads/2024/07/shrek5-580x326.jpg"
-            })
-            ()
-            GotDataFromServer
-    | GotDataFromServer(characterName, characterArtUrl) ->
-        {
+        match echoGuid <> model.EchoGuid, model.CharacterOption with
+        | true, Some character -> {
             model with
-                Character =
-                    model.Character
-                    |> Character.update (Character.Msg.ModifyCharacterName characterName)
-                    |> Character.update (Character.Msg.ModifyCharacterUrl characterArtUrl)
+                CharacterOption = Character.update characerMsg character |> Some
+                EchoGuid = Guid.NewGuid()
+          }
+        | _ -> model
+        , Cmd.none
 
-                DataFromServer = "Received data from the server"
-        },
-        Cmd.none
+
 
 // View
 
@@ -65,11 +79,18 @@ let view (model: Index) (dispatch: Msg -> unit) =
             prop.className "mb-2 shadow-lg bg-neutral text-neutral-content rounded-box"
             prop.children [
                 Daisy.navbarStart []
-                Daisy.navbarCenter [ Html.span [ prop.text model.DataFromServer; prop.className "text-2xl" ] ]
+                Daisy.navbarCenter [
+                    Html.span [ prop.text "Paladins & Pure Functions"; prop.className "text-2xl" ]
+                ]
                 Daisy.navbarEnd [
-                    Daisy.button.button [ prop.text "Click me"; prop.onClick (fun e -> dispatch FetchDataFromServer) ]
+                    match model.ConnectionStatus with
+                    | NotConnectedToServer -> "Not Connected to Server"
+                    | ConnectedToServer -> "Connected to Server"
+                    |> Html.text
                 ]
             ]
         ]
-        Character.view model.Character (CharacterMsg >> dispatch)
+        match model.CharacterOption with
+        | Some character -> Character.view character (CharacterMsg >> dispatch)
+        | None -> Html.none
     ]

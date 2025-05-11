@@ -15,16 +15,18 @@ export default defineConfig({
         outDir: "../../deploy/public",
     },
     server: {
+        host: '0.0.0.0',
         port: 8080,
         proxy: {
             // redirect requests that start with /api/ to the server on port 5000
-            "/api/": {
-                target: proxyTarget,
-                changeOrigin: true,
-            }
-        },
-        watch: {
-            ignored: [ "**/*.fs" ]
-        },
+            // "/api/": {
+            //     target: proxyTarget,
+            //     changeOrigin: true,
+            // },
+            "/bridge": {
+                target: "ws://localhost:" + proxyPort,
+                ws: true,
+            },
+        }
     }
 });

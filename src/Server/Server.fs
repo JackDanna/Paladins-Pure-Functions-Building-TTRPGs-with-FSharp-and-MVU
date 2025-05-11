@@ -1,41 +1,90 @@
 module Server
 
-open SAFE
 open Saturn
+open Giraffe
+
 open Shared
+open Shared.Bridge
+open Elmish
+open Elmish.Bridge
 
-module Storage =
-    let todos =
-        ResizeArray [
-            Todo.create "Create new SAFE project"
-            Todo.create "Write your app"
-            Todo.create "Ship it!!!"
-        ]
 
-    let addTodo todo =
-        if Todo.isValid todo.Description then
-            todos.Add todo
-            Ok()
-        else
-            Error "Invalid todo"
+let mutable characterDB = Character.init ()
 
-let todosApi ctx = {
-    getTodos = fun () -> async { return Storage.todos |> List.ofSeq }
-    addTodo =
-        fun todo -> async {
-            return
-                match Storage.addTodo todo with
-                | Ok() -> Storage.todos |> List.ofSeq
-                | Error e -> failwith e
-        }
-}
+// Bridge Stuff
 
-let webApp = Api.make todosApi
+type ServerMsg =
+    | ClosedConnection
+    | RS of ClientToServerMsg // RS stands for Remote Server
+    | ResultOfSideEffect of Result<unit, string>
+
+let hub = ServerHub<User, ServerMsg, ServerToClientMsg>()
+
+let init clientDispatch () =
+    characterDB |> ServerToClientMsg.InitialConnection |> clientDispatch
+    Guest, Cmd.none
+
+let update clientDispatch msg (model: User) =
+    match msg with
+    | ClosedConnection -> model, Cmd.none
+    | RS(UpdateCharacter(msg, echoGuid)) ->
+
+        hub.SendClientIf (fun user -> true) (BroadcastedCharacterMsg(msg, echoGuid))
+
+        model,
+        Cmd.OfAsyncImmediate.perform
+            (fun () -> async {
+
+                characterDB <- Character.update msg characterDB
+
+                return Ok()
+
+            })
+            ()
+            ResultOfSideEffect
+
+    | ResultOfSideEffect result -> model, Cmd.none
+
+
+let server =
+    Bridge.mkServer Shared.Bridge.endpoint init update
+    |> Bridge.withConsoleTrace
+    |> Bridge.withServerHub hub
+    |> Bridge.whenDown ClosedConnection
+    |> Bridge.run Giraffe.server
+
+let webApp =
+    choose [
+        server
+    //route "/" >=> htmlFile "/index.html"
+    ]
+
+// open Microsoft.AspNetCore.Builder
+// open Microsoft.AspNetCore.StaticFiles
+// open Microsoft.Extensions.FileProviders
+// open System.IO
+// open Microsoft.AspNetCore.Http
 
 let app = application {
+    url "http://0.0.0.0:5000"
     use_router webApp
+    app_config Giraffe.useWebSockets
     memory_cache
-    use_static "public"
+
+    // app_config (fun (app: IApplicationBuilder) ->
+    //     app.UseStaticFiles(
+    //         StaticFileOptions(
+    //             FileProvider =
+    //                 new PhysicalFileProvider(
+    //                     Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../FogentRoleplay"))
+    //                 ),
+    //             RequestPath = new PathString "/FogentRoleplay"
+    //         )
+    //     )
+    //     |> ignore
+
+    //     app) // Return the original app builder
+
     use_gzip
 }
 
