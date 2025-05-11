@@ -17,3 +17,18 @@ type ITodosApi = {
     getTodos: unit -> Async<Todo list>
     addTodo: Todo -> Async<Todo list>
 }
+
+open Character
+
+module Bridge =
+    open System
+
+    type ClientToServerMsg =
+        | GetCharacter
+        | UpdateCharacter of Character.Msg * echoGuid: Guid
+
+    type ServerToClientMsg =
+        | GotCharacter of Character
+        | BroadcastedCharacterMsg of Character.Msg * echoGuid: Guid
+
+    let endpoint = "/bridge"
