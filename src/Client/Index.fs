@@ -46,7 +46,7 @@ let update msg model =
                 CharacterOption = Character.update msg character |> Some
           }
         | None -> model
-        , Cmd.none
+        , Cmd.bridgeSend (ClientToServerMsg.UpdateCharacter(msg, model.EchoGuid))
     | RC(InitialConnection character) ->
         {
             model with
@@ -64,8 +64,6 @@ let update msg model =
           }
         | _ -> model
         , Cmd.none
-
-
 
 // View
 

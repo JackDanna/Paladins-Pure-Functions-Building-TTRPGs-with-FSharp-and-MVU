@@ -71,20 +71,6 @@ let app = application {
     app_config Giraffe.useWebSockets
     memory_cache
 
-    // app_config (fun (app: IApplicationBuilder) ->
-    //     app.UseStaticFiles(
-    //         StaticFileOptions(
-    //             FileProvider =
-    //                 new PhysicalFileProvider(
-    //                     Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../FogentRoleplay"))
-    //                 ),
-    //             RequestPath = new PathString "/FogentRoleplay"
-    //         )
-    //     )
-    //     |> ignore
-
-    //     app) // Return the original app builder
-
     use_gzip
 }
 
